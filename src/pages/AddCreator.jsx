@@ -13,7 +13,7 @@ async function handleAddCreator(event) {
     event.preventDefault();
     
     const { data, error } = await supabase
-        .from('content_creators')
+        .from('creators')
       .insert([formData]);
     
     if (data) {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { supabase } from '../client';
 import CreatorInfo from '../components/CreatorInfo';
 
@@ -10,7 +10,7 @@ function ViewCreator() {
     useEffect(() => {
       async function fetchCreator() {
         const { data, error } = await supabase
-          .from('content_creators')
+          .from('creators')
           .select('*')
           .eq('id', id)
           .single(); // This gets only one record
@@ -27,9 +27,15 @@ function ViewCreator() {
     }
     
         return (
-        <div className="single-creator-view">
-            <CreatorInfo creator={creator} />
-        </div>
+        <>
+        {/* <div className="single-creator-view"> */}
+            {/* <CreatorInfo creator={creator} /> */}
+          {/* </div> */}
+          <div className="single-creator-view">
+              <CreatorInfo creator={creator} />
+              <Link to={`/edit/${creator.id}`}>Edit Creator</Link>
+            </div>
+            </>
     );
 }
     

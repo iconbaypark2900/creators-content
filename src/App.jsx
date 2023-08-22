@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useRoutes, Link, BrowserRouter as Router} from 'react-router-dom'; 
-import  ShowCreators  from './pages/ShowCreators.jsx';
-import  ViewCreator  from './pages/ViewCreator.jsx';
-import  EditCreator  from './pages/EditCreator.jsx';
-import  AddCreator  from './pages/AddCreator.jsx';
+import ShowCreators from './pages/ShowCreators.jsx';
+import ViewCreator from './pages/ViewCreator.jsx';
+import EditCreator from './pages/EditCreator.jsx';
+import AddCreator from './pages/AddCreator.jsx';
 import { supabase } from './client';
 import './App.css';
 
@@ -29,24 +29,19 @@ function App() {
     fetchCreators();
   }, []);
 
-  // let routedElement = useRoutes([
-  //   { path: '/', element: <ShowCreators creators = {creators} /> },
-  //   { path: '/view/:id', element: <ViewCreator /> },
-  //   { path: '/edit/:id', element: <EditCreator /> },
-  //   { path: '/add', element: <AddCreator /> },
-  // ]);
-
   return (
     <Router>
       <div className="App">
           <h1>Welcome to Creatorverse</h1>
           <RoutesComponent creators={creators} />
           <Link to="/add" className='add-button'>Add a Content Creator</Link>
+          <Link to="/" className='back-home'>Back to Home</Link>
       </div>
     </Router>
   );
 }
 
 export default App;
+
 
 

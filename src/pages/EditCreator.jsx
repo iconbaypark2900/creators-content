@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../client';
 
 function EditCreator() {
@@ -10,7 +10,8 @@ function EditCreator() {
       imageURL: ''
     });
   
-    const { id } = useParams(); // Get the ID from the URL.
+    const { id  } = useParams(); // Get the ID from the URL.
+    const navigate = useNavigate();
  
     useEffect(() => {
         async function fetchCreator() {
@@ -38,12 +39,37 @@ async function handleUpdateCreator(event) {
         .update(formData)
         .eq('id', id);
     
-    if (data) {
-      alert('Creator updated successfully!');
-        // Optionally, redirect the user or provide further feedback here.
+        if (data && data.length > 0) {
+          alert('Creator added successfully!');
+          setFormData({
+              name: '',
+              url: '',
+              description: '',
+              imageURL: ''
+          });
+      } else if (error) {
+          console.error('Error adding creator:', error);
+          alert('Error adding creator:', error.message);
+      } else {
+          console.error('Unexpected behavior: No data or error returned from Supabase.');
+          alert('An unexpected error occurred.');
+      }
+      
+}
+
+async function handleDelete() {
+  if (window.confirm('Are you sure you want to delete this creator? This action cannot be undone.')) {
+    const { error } = await supabase.from('creators').delete().eq('id', id);
+    if (error) {
+      console.error('Error deleting creator:', error);
+      alert('Failed to delete creator. Please try again later.');
     } else {
-      alert('Error updating creator:', error.message);
+      alert('Creator successfully deleted.');
+      // After successful deletion, redirect to the main page
+      // Assuming you're using 'react-router-dom'
+      navigate('/');
     }
+  }
 }
 
 return (
@@ -85,6 +111,8 @@ return (
           />
         </div>
         <button type="submit">Update Creator</button>
+        <button onClick={handleDelete}>Delete Creator</button>
+        <Link to="/">Back to Creators List</Link>
       </form>
     </div>
   );
