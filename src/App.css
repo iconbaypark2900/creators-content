@@ -1,89 +1,230 @@
-import 'picocss/dist/pico.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&family=Sono:wght@800&display=swap');
 
+:root {
+    --border-width: 2px;
+    --border-radius: 0.3rem;
+    --background-color-dark: rgb(0, 6, 13);
+    --color-light: rgb(255, 255, 255);
+    --muted-color: rgb(63, 75, 89);
+    --primary: rgb(81, 133, 180);
+    --primary-hover: rgb(67, 115, 157);
+    --primary-focus: rgba(61, 105, 143, 0.25);
+    --primary-inverse: #fff;
+    --secondary: var(--muted-color);
+    --secondary-hover: rgb(51, 61, 72);
+    --form-element-background-color: white;
+    --form-element-border-color: white;
+    --form-element-color: black;
+    --form-element-placeholder-color: var(--muted-color);
+    --container-padding: 2em;
+}
 
-#root {
-  max-width: 1280px;
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Poppins, Verdana, sans-serif;
+  background-color: var(--background-color-dark);
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;  /* makes sure it takes the full height of the viewport */
+  padding: var(--container-padding);
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+
+nav {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2em;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+nav li {
+    margin: 0 15px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+main {
+    margin-top: 2em;
 }
 
-.card {
-  padding: 2em;
+.Card {
+    border: var(--border-width) solid var(--muted-color);
+    background-size: cover;
+    background-position-y: center;
+    border-radius: var(--border-radius);
+    margin: 1em;
+    width: 30%;
+    height: 340px;
+    transition: transform 0.3s;
 }
 
-.read-the-docs {
-  color: #888;
+.Card:hover {
+    transform: scale(1.05);
 }
 
-.creators-grid {
+article {
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.9) 100%);
+}
+
+h1 {
+    font-family: Sono;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+h2, h3 {
+    font-family: Poppins;
+    font-weight: 700;
+    margin-bottom: 1em;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.5em;
+}
+
+.AddEditCreator {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+input[type=text], input[type=number], textarea {
+    padding: 10px;
+    border: 2px solid var(--form-element-border-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 80%;
+    color: var(--form-element-color);
+    background-color: var(--form-element-background-color);
+    transition: border-color 0.3s ease;
+}
+
+input[type=text]:focus, input[type=number]:focus, textarea:focus {
+    border-color: var(--primary);
+}
+
+button {
+    cursor: pointer;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--primary);
+    color: var(--primary-inverse);
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin: 1em 0;
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+}
+
+.ViewCreator {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 20px;
+}
+
+.ShowCreators {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* This makes sure that each card takes up at least 250px and will adjust the number of cards per row based on the container's width. */
+  gap: 1em; /* Spacing between each card */
+}
+
+
+.creator-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* To make it circular */
+  object-fit: cover; /* Ensures the image covers the div without distortion */
+  margin: 0 auto; /* Centers the image horizontally */
 }
 
 .creator-card {
-  border: 1px solid #e0e0e0;
-  padding: 16px;
-  border-radius: 8px;
-  text-align: center;
-  transition: 0.3s;
-
-  /* Optionally, add hover effect */
-  &:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transform: translateY(-4px);
-  }
+  background-color: var(--form-element-background-color);
+  border: var(--border-width) solid var(--muted-color);
+  border-radius: var(--border-radius);
+  padding: 1em;
+  transition: transform 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for a lift effect */
 }
 
-.creator-image {
-  width: 100%;
-  height: auto;
-  max-height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 12px;
+.creator-card:hover {
+  transform: translateY(-5px); /* Gives a slight lift effect on hover */
 }
 
-.view-link {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: #007BFF;
-  color: white;
+
+
+.delete-modal {
+    width: 300px;
+    height: 150px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.edit-button, .delete-button {
+  padding: 5px 15px;
   text-decoration: none;
-  border-radius: 4px;
-  transition: 0.3s;
-
-  &:hover {
-    background-color: #0056b3;
-  }
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
+.edit-button {
+  background-color: var(--primary);
+  color: var(--primary-inverse);
+}
+
+.edit-button:hover {
+  background-color: var(--primary-hover);
+}
+
+.delete-button {
+  background-color: red;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: darkred;
+}

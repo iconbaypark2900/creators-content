@@ -1,47 +1,74 @@
-import { useState, useEffect } from 'react';
-import { useRoutes, Link, BrowserRouter as Router} from 'react-router-dom'; 
-import ShowCreators from './pages/ShowCreators.jsx';
-import ViewCreator from './pages/ViewCreator.jsx';
-import EditCreator from './pages/EditCreator.jsx';
-import AddCreator from './pages/AddCreator.jsx';
+import React, { useState, useEffect } from 'react';
+import { useRoutes, BrowserRouter } from 'react-router-dom';
+import ShowCreators from './pages/ShowCreators';
+import AddCreator from './pages/AddCreator';
+import EditCreator from './pages/EditCreator';
+import ViewCreator from './pages/ViewCreator';
 import { supabase } from './client';
+import '@picocss/pico';
 import './App.css';
 
-function RoutesComponent({ creators }) {
+const Routes = ({ creators }) => {
   return useRoutes([
-    { path: '/', element: <ShowCreators creators={creators} /> },
-    { path: '/view/:id', element: <ViewCreator /> },
-    { path: '/edit/:id', element: <EditCreator /> },
-    { path: '/add', element: <AddCreator /> },
+    {
+      path: "/",
+      element: <ShowCreators data={creators} />
+    },
+    {
+      path: "/edit/:id",
+      element: <EditCreator data={creators} />
+    },
+    {
+      path: "/new",
+      element: <AddCreator />
+    },
+    {
+      path: "/view/:id",
+      element: <ViewCreator data={creators} />
+    }
   ]);
 }
 
-function App() {
+const App = () => {
   const [creators, setCreators] = useState([]);
 
   useEffect(() => {
-    async function fetchCreators() {
-      const { data, error } = await supabase.from('creators').select('*');
-      if (data) setCreators(data);
-      if (error) console.error('Error fetching data: ', error);
-    }
-    
+    const fetchCreators = async () => {
+      const { data } = await supabase
+        .from('creators')
+        .select()
+        .order('created_at', { ascending: true });
+
+        console.log("Fetched creators: ", data);
+
+      // Only set the state if the data has changed
+      if (JSON.stringify(data) !== JSON.stringify(creators)) {
+        setCreators(data);
+      }
+    };
+
     fetchCreators();
   }, []);
 
   return (
-    <Router>
+    <BrowserRouter>
       <div className="App">
-          <h1>Welcome to Creatorverse</h1>
-          <RoutesComponent creators={creators} />
-          <Link to="/add" className='add-button'>Add a Content Creator</Link>
-          <Link to="/" className='back-home'>Back to Home</Link>
+        <header>
+          <h1>Creatorverse</h1>
+          <nav>
+            <ul>
+              <li><a href="/" role="button">View All Creators</a></li>
+              <li><a href="/new" role="button">Add a Creator</a></li>
+            </ul>
+          </nav>
+        </header>
+        
+        <main><Routes creators={creators} /></main>
       </div>
-    </Router>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
-
 
 
