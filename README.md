@@ -36,9 +36,9 @@ The following **additional** features are implemented:
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented required features:
+Here's a walkthrough of implemented required features: (./assets/cc.gif)
 
-![Video Walkthrough](./assets/cc.gif)
+
 
 GIF created with LiceCap
 
