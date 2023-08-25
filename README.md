@@ -38,8 +38,6 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented required features: (./assets/cc.gif)
 
-[Click here to view the GIF in a new tab](./assets/cc.gif){:target="_blank"}
-
 GIF created with LiceCap
 
 ## Notes
